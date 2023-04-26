@@ -1,0 +1,283 @@
+{
+    "pages": {
+        "configuration": {
+            "title": "Configuration",
+            "tabs": [
+                {
+                    "name": "account",
+                    "title": "Account",
+                    "table": {
+                        "actions": [
+                            "edit",
+                            "delete",
+                            "clone"
+                        ],
+                        "header": [
+                            {
+                                "label": "name",
+                                "field": "name"
+                            }
+                        ]
+                    },
+                    "entity": [
+                        {
+                            "type": "text",
+                            "field": "name",
+                            "label": "Display name",
+                            "required": true
+                        },
+                        {
+                            "type": "text",
+                            "field": "username",
+                            "label": "username",
+                            "required": true
+                        },
+                        {
+                            "type": "text",
+                            "field": "password",
+                            "label": "Password",
+                            "required": true,
+                            "encrypted": true
+                        },
+                        {
+                            "type": "text",
+                            "field": "client_secret",
+                            "label": "client_secret",
+                            "required": true,
+                            "encrypted": true
+                        },
+                        {
+                            "type": "text",
+                            "field": "client_id",
+                            "label": "client_id",
+                            "required": true,
+                            "encrypted": true
+                        },
+                        {
+                            "type": "text",
+                            "field": "openid_uri",
+                            "label": "openid_uri",
+                            "required": true,
+                            "validators": [
+                                {
+                                    "type": "url",
+                                    "errorMsg": "Input must an URL address."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "label": "grant_type",
+                            "field": "grant_type",
+                            "required": true,
+                            "defaultValue": "password"
+                        },
+                        {
+                            "type": "text",
+                            "label": "scope",
+                            "field": "scope",
+                            "required": true,
+                            "defaultValue": "openid"
+                        }
+                    ]
+                },
+                {
+                    "name": "logging",
+                    "title": "Logging",
+                    "entity": [
+                        {
+                            "field": "loglevel",
+                            "label": "Log level",
+                            "type": "singleSelect",
+                            "options": {
+                                "disableSearch": true,
+                                "autoCompleteFields": [
+                                    {
+                                        "label": "DEBUG",
+                                        "value": "DEBUG"
+                                    },
+                                    {
+                                        "label": "INFO",
+                                        "value": "INFO"
+                                    },
+                                    {
+                                        "label": "ERROR",
+                                        "value": "ERROR"
+                                    }
+                                ]
+                            },
+                            "defaultValue": "INFO"
+                        }
+                    ]
+                },
+                {
+                    "name": "proxy",
+                    "title": "Proxy",
+                    "entity": [
+                        {
+                            "field": "proxy_enabled",
+                            "label": "Enable",
+                            "type": "checkbox"
+                        },
+                        {
+                            "field": "proxy_url",
+                            "label": "Host",
+                            "type": "text",
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "minLength": 0,
+                                    "maxLength": 4096,
+                                    "errorMsg": "Max host length is 4096"
+                                }
+                            ]
+                        },
+                        {
+                            "field": "proxy_port",
+                            "label": "Port",
+                            "type": "text",
+                            "validators": [
+                                {
+                                    "type": "number",
+                                    "range": [
+                                        1,
+                                        65535
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "field": "proxy_username",
+                            "label": "Username",
+                            "type": "text",
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "minLength": 0,
+                                    "maxLength": 50,
+                                    "errorMsg": "Max length of username is 50"
+                                }
+                            ]
+                        },
+                        {
+                            "field": "proxy_password",
+                            "label": "Password",
+                            "type": "text",
+                            "encrypted": true,
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "minLength": 0,
+                                    "maxLength": 8192,
+                                    "errorMsg": "Max length of password is 8192"
+                                }
+                            ]
+                        }
+                    ],
+                    "options": {
+                        "saveValidator": "function(formData) { if(!formData.proxy_enabled || formData.proxy_enabled === '0') {return true; } if(!formData.proxy_url) { return 'Proxy Host can not be empty'; } if(!formData.proxy_port) { return 'Proxy Port can not be empty'; } return true; }"
+                    }
+                }
+            ]
+        },
+        "inputs": {
+            "services": [
+                {
+                    "title": "DEMO Modular Input",
+                    "name": "mod_input_demo",
+                    "entity": [
+                        {
+                            "type": "text",
+                            "label": "Name",
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "errorMsg": "Input Name must begin with a letter and consist exclusively of alphanumeric characters and underscores.",
+                                    "pattern": "^[a-zA-Z]\\w*$"
+                                },
+                                {
+                                    "type": "string",
+                                    "errorMsg": "Length of input name should be between 1 and 100",
+                                    "minLength": 1,
+                                    "maxLength": 100
+                                }
+                            ],
+                            "field": "name",
+                            "help": "A unique name for the data input.",
+                            "required": true
+                        },
+                        {
+                            "type": "singleSelect",
+                            "label": "Account",
+                            "options": {
+                                "referenceName": "account"
+                            },
+                            "help": "",
+                            "field": "account",
+                            "required": false
+                        },
+                        {
+                            "type": "text",
+                            "label": "demo_uri",
+                            "field": "demo_uri",
+                            "required": true,
+                            "validators": [
+                                {
+                                    "type": "url",
+                                    "errorMsg": "Input must an URL address."
+                                }
+                            ]
+                        }
+                    ],
+                    "test": "test"
+                }
+            ],
+            "title": "Inputs",
+            "description": "Manage your data inputs",
+            "table": {
+                "actions": [
+                    "edit",
+                    "enable",
+                    "delete",
+                    "clone"
+                ],
+                "header": [
+                    {
+                        "label": "Name",
+                        "field": "name"
+                    },
+                    {
+                        "label": "Account",
+                        "field": "account"
+                    },
+                    {
+                        "label": "Status",
+                        "field": "disabled"
+                    }
+                ],
+                "moreInfo": [
+                    {
+                        "label": "Interval",
+                        "field": "interval"
+                    },
+                    {
+                        "label": "Index",
+                        "field": "index"
+                    },
+                    {
+                        "label": "Sourcetype",
+                        "field": "sourcetype"
+                    }
+                ]
+            }
+        }
+    },
+    "meta": {
+        "name": "mod_input_demo",
+        "displayName": "Modular Input demo",
+        "version": "0.0.0RNone",
+        "restRoot": "mod_input_demo",
+        "schemaVersion": "0.0.3",
+        "apiVersion": "3.2.0"
+    }
+}

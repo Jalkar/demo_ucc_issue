@@ -1,0 +1,42 @@
+splunk:
+  user: splunk
+  group: splunk
+  password: adminpwd
+  secret: IAq2GTSyZvheoJ7GxXM.tpZKq.o9txn20f9IqSRX0BIDvw0mdsc2gCPmznAF1K0vGWVkIqYm6QtUaOwIVETXsIeMli1htj0Vif/wIEg81I8dEK.7SqWeYe/6X6gC/cAp9F4VqABrg26/S.ZDmyFEuBT6cprbWWBzWyUg5lstuMvX.Mb1XKn7QXLEPKigBHWobjQD3Ts423jRJEPvPVs9ElzWDKvjGxXmVZJblFoxh7FFKnAyRQq4Q7YY2XNTx2
+  conf:
+    web:
+      directory: /opt/splunk/etc/apps/search/local
+      content:
+        settings:
+          cacheEntriesLimit : 0
+          cacheBytesLimit : 0
+    indexes:
+      directory: /opt/splunk/etc/apps/search/local
+      content:
+        default:
+          maxTotalDataSizeMB: 512
+          journalCompression: zstd
+          tsidxWritingLevel: 4
+    inputs:
+      directory: /opt/splunk/etc/apps/test_demo_input/local
+      content:
+        mod_input_demo://GetResults:         
+          account: ACCOUNT_DEMO
+          demo_uri: https://google.fr
+          interval: 30
+    mod_input_demo_account:
+      directory: /opt/splunk/etc/apps/test_demo_input/local
+      content:
+        ACCOUNT_DEMO:         
+          client_id: cient_id
+          client_secret: super_secret
+          grant_type: password
+          openid_uri: https://google.fr
+          password: super_password
+          scope: openid
+          username: username    
+    mod_input_demo_settings:
+      directory: /opt/splunk/etc/apps/mod_input_demo/local
+      content:
+        logging:
+          loglevel : DEBUG

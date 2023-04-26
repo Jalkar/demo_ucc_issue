@@ -1,0 +1,20 @@
+version: "3.7"
+services:
+  splunk-demo:
+    build: .
+    container_name: demo-splunk
+    environment:
+      - SPLUNK_START_ARGS=--accept-license
+      - DEBUG=true
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:8000']
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - ./splunk.yml:/tmp/defaults/default.yml
+      # - ./output/:/tmp/output
+      - ./output/mod_input_demo:/opt/splunk/etc/apps/mod_input_demo
+      - ./test_demo_input.metadata:/opt/splunk/etc/apps/test_demo_input/metadata/local.meta
+    ports:
+      - 8000  
